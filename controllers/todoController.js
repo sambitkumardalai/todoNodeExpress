@@ -32,3 +32,50 @@ exports.createTodo = async (req, res) => {
     });
   }
 };
+
+exports.updateTodo = async (req, res) => {
+  try {
+    const doc = await Todo.findByIdAndUpdate(req.params.id, req.body);
+    console.log(doc);
+    if (!doc) {
+      res.status(200).json({
+        status: "Fail",
+        message: "No task found with this id",
+      });
+    } else {
+      res.status(200).json({
+        status: "Success",
+        message: "Task updated",
+      });
+    }
+  } catch (error) {
+    res.status(200).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
+
+exports.deleteTodo = async (req, res) => {
+  try {
+    console.log(req.params);
+    const doc = await Todo.findByIdAndDelete(req.params.id);
+
+    if (!doc) {
+      res.status(200).json({
+        status: "Fail",
+        message: "No task found with this id",
+      });
+    } else {
+      res.status(200).json({
+        status: "Success",
+        message: "Task deleted",
+      });
+    }
+  } catch (error) {
+    res.status(200).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
