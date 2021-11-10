@@ -26,3 +26,19 @@ exports.signup = async (req, res) => {
     });
   }
 };
+
+exports.login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    // 1) check if email or password not given
+    if (!email || !password)
+      throw new Error("Please provide email or password");
+    // const user = User.findOne(email);
+  } catch (error) {
+    // console.log(error);
+    res.status(400).json({
+      staus: "Failed",
+      message: error.message,
+    });
+  }
+};
