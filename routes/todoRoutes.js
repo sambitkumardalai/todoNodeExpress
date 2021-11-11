@@ -3,6 +3,7 @@ const todoController = require("../controllers/todoController");
 const router = express.Router();
 
 router.route("/getAllTodo").get(todoController.getAllTodo);
+router.route("/getTodo/:id").get(todoController.getTodo);
 router.route("/createTodo").post(todoController.createTodo);
 router.route("/updateTodo/:id").patch(todoController.updateTodo);
 router.route("/deleteTodo/:id").delete(todoController.deleteTodo);
