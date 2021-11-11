@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please provide password"],
+    select: false,
   },
   confirmPassword: {
     type: String,
@@ -30,8 +31,12 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// check if the given password is same while login
+userSchema.methods.correctPassword = async (candidatePassword, userPassword) =>
+  await bcrypt.compare(candidatePassword, userPassword);
+
 userSchema.pre("save", async function (next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
   this.confirmPassword = undefined;
   next();
