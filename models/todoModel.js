@@ -5,7 +5,7 @@ const todoSchema = new mongoose.Schema({
     type: String,
     required: [true, "A task must have a name"],
     trim: true,
-    maxlength:[2,"A task must have more or equal than 2 characters"],
+    minlength: [4, "A task must have more or equal than 4 characters"],
     unique: [true, "A task name must be unique"],
   },
   taskDate: {
