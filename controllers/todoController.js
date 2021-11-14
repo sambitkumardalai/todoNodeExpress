@@ -37,13 +37,17 @@ exports.createTodo = catchAsync(async (req, res, next) => {
 });
 
 exports.updateTodo = catchAsync(async (req, res, next) => {
-  const doc = await Todo.findByIdAndUpdate(req.params.id, req.body);
+  const doc = await Todo.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
   if (!doc) {
     return next(new appError("No task found with this id", 404));
   }
   res.status(200).json({
     status: "Success",
     message: "Task updated",
+    doc,
   });
 });
 
